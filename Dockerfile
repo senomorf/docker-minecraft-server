@@ -13,7 +13,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
     lsof \
     gosu \
     bash \
-    curl iputils wget \
+    curl wget \
     git \
     jq \
     dos2unix \
