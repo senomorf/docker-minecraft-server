@@ -70,7 +70,9 @@ COPY mcstatus /usr/local/bin
 
 VOLUME ["/data"]
 COPY server.properties /tmp/server.properties
+RUN chown minecraft:minecraft /tmp/server.properties
 COPY log4j2.xml /tmp/log4j2.xml
+RUN chown minecraft:minecraft /tmp/log4j2.xml
 WORKDIR /data
 
 ENV UID=1000 GID=1000 \
@@ -86,7 +88,7 @@ ADD files/autopause /autopause
 
 RUN dos2unix /start* && chmod 444 /start* && chmod +x /start*
 RUN dos2unix /health.sh && chmod 444 /health.sh && chmod +x /health.sh
-RUN dos2unix /autopause/* && chmod 444 /autopause/*.sh && chmod +x /autopause/*.sh
+RUN dos2unix /autopause/* && chmod 444 /autopause/* && chmod +x /autopause/*.sh
 
 ENTRYPOINT [ "/start" ]
 HEALTHCHECK --start-period=1m CMD /health.sh
