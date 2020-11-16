@@ -1,8 +1,10 @@
-FROM adoptopenjdk:latest
+FROM oracle/jdk:15
 
 LABEL org.opencontainers.image.authors="Geoff Bourne <itzgeoff@gmail.com>"
 
 RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive \
+  apt-get upgrade -y \
   && DEBIAN_FRONTEND=noninteractive \
   apt-get install -y \
     imagemagick \
@@ -49,7 +51,7 @@ RUN easy-add --var os=${TARGETOS} --var arch=${TARGETARCH}${TARGETVARIANT} \
  --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_{{.os}}_{{.arch}}.tar.gz
 
 RUN easy-add --var os=${TARGETOS} --var arch=${TARGETARCH}${TARGETVARIANT} \
- --var version=1.4.3 --var app=mc-server-runner --file {{.app}} \
+ --var version=1.5.0 --var app=mc-server-runner --file {{.app}} \
  --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_{{.os}}_{{.arch}}.tar.gz
 
 RUN easy-add --var os=${TARGETOS} --var arch=${TARGETARCH}${TARGETVARIANT} \
