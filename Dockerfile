@@ -13,10 +13,12 @@ RUN DEBIAN_FRONTEND=noninteractive \
     lsof \
     gosu \
     bash \
-    curl wget \
+    curl iputils-ping wget \
     git \
     jq \
     dos2unix \
+    psmisc \
+    net-tools \
     mysql-client \
     tzdata \
     rsync \
