@@ -1,4 +1,4 @@
-FROM oracle/jdk:15
+FROM oracle/jdk:14
 
 LABEL org.opencontainers.image.authors="Geoff Bourne <itzgeoff@gmail.com>"
 
