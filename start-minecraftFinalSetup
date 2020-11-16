@@ -54,7 +54,10 @@ done
 if [ -d /mods ]; then
   log "Copying any mods over..."
   mkdir -p /data/mods
-  rsync -a --out-format="update:%f:Last Modified %M" --prune-empty-dirs --update /mods /data
+  if isTrue "${REMOVE_OLD_MODS}"; then
+    rsyncArgs=(--delete)
+  fi
+  rsync -a --out-format="update:%f:Last Modified %M" "${rsyncArgs[@]}" --prune-empty-dirs --update /mods /data
 fi
 
 [ -d /data/config ] || mkdir /data/config
@@ -181,7 +184,7 @@ if [[ ${TYPE} == "CURSE_INSTANCE" ]]; then
     exec mc-server-runner ${mcServerRunnerArgs} \
       --cf-instance-file "${CURSE_INSTANCE_JSON}" \
       java $JVM_XX_OPTS $JVM_OPTS $expandedDOpts -jar _SERVERJAR_ "$@" $EXTRA_ARGS
-elif [[ ${TYPE} == "CURSEFORGE" && "${SERVER}" ]]; then
+elif [[ ${TYPE} == "FEED-THE-BEAST" && "${SERVER}" ]]; then
   copyFilesForCurseForge
 
   cd "${FTB_DIR}"
@@ -190,7 +193,7 @@ elif [[ ${TYPE} == "CURSEFORGE" && "${SERVER}" ]]; then
     set -x
   fi
   exec mc-server-runner ${bootstrapArgs} ${mcServerRunnerArgs} java $JVM_XX_OPTS $JVM_OPTS $expandedDOpts -jar $(basename "${SERVER}") "$@" $EXTRA_ARGS
-elif [[ ${TYPE} == "CURSEFORGE" ]]; then
+elif [[ ${TYPE} == "FEED-THE-BEAST" ]]; then
   mcServerRunnerArgs="${mcServerRunnerArgs} --shell bash"
 
   copyFilesForCurseForge
